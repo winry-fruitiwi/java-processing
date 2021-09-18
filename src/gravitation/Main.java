@@ -1,6 +1,7 @@
 package gravitation;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,16 +34,19 @@ public class Main extends PApplet {
 		for (int i=0; i<100; i++) {
 			planets.add(new Planet(this, (int) random(width),
 					(int) random(height),
-					(int) random(20)));
+					(int) random(20)+8));
 		}
 	}
 
 	@Override
 	public void draw() {
 		background(210, 100, 30, 100);
+		PVector gravity = new PVector(0, 0.4f);
 
 		for (Planet p : planets) {
 			p.show(this);
+			p.update(this);
+			p.applyForce(this, gravity);
 		}
 	}
 
