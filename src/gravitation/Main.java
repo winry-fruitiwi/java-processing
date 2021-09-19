@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class Main extends PApplet {
 	List<Planet> planets;
+	Planet attractor;
 
 	public static void main(String[] args) {
 		PApplet.main(new String[]{Main.class.getName()});
@@ -34,8 +35,9 @@ public class Main extends PApplet {
 		for (int i=0; i<100; i++) {
 			planets.add(new Planet(this, (int) random(width),
 					(int) random(height),
-					(int) random(20)+8));
+					(int) random(200)+40));
 		}
+		attractor = new Planet(this, width/2, height/2, 500);
 	}
 
 	@Override
@@ -43,10 +45,13 @@ public class Main extends PApplet {
 		background(210, 100, 30, 100);
 		PVector gravity = new PVector(0, 0.4f);
 
+		attractor.show(this);
+
 		for (Planet p : planets) {
 			p.show(this);
 			p.update(this);
 			p.applyForce(this, gravity);
+			p.applyForce(this, attractor.attract(this, p));
 		}
 	}
 

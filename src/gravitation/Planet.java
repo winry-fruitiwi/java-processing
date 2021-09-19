@@ -12,16 +12,16 @@ public class Planet {
 
 	public Planet(PApplet app, int x, int y, int mass) {
 		pos = new PVector(x, y);
-		vel = PVector.random2D();
+		vel = PVector.random2D().mult(2);
 		acc = new PVector(0, 0);
 		this.mass = mass;
-		this.r = this.mass / 1.5f;
+		this.r = (float) Math.sqrt(this.mass);
 	}
 
 	public void show(PApplet app) {
-		app.fill(0, 0, 100, 20);
+		app.fill(0, 0, 100, 40);
 		app.noStroke();
-		app.circle(pos.x, pos.y, this.r);
+		app.circle(pos.x, pos.y, this.r*2);
 	}
 
 
@@ -35,6 +35,36 @@ public class Planet {
 		// F = ma, so a = F/m. m usually doesn't equal 1, so we keep that.
 		acc.add(force);
 		acc.div(this.mass);
+	}
+
+
+	// attracts other to this.pos using Newton's Universal Law of Gravitation
+	public PVector attract(PApplet app, Planet other) {
+		// We want a distance between the two, as required by Newton's Law
+		float distance = PVector.dist(this.pos, other.pos);
+		if (distance == 0) {
+			// then other is either ourselves or exactly on us!
+			System.out.println("0 in attract!");
+			return new PVector(0.001f, 0.001f);
+
+		}
+
+		// Now it's time for the fun part: Newton's Law of Gravitation!
+		// g = G*m₁*m₂/r^2
+
+		int G = 1;
+
+		float mass_product = this.mass*other.mass;
+		mass_product = mass_product/(distance * distance) * G;
+		// We need a vector pointing from other.pos to this.pos.
+		PVector vectorToUs = PVector.sub(this.pos, other.pos);
+		vectorToUs.setMag(mass_product);
+
+		// We can't make gravity too big!
+		float magnitude = PApplet.constrain(vectorToUs.mag(), 20, 80);
+		vectorToUs.setMag(magnitude);
+
+		return vectorToUs;
 	}
 
 }
