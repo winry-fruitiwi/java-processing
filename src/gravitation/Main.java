@@ -15,48 +15,74 @@ import java.util.List;
  * 	attract
  */
 public class Main extends PApplet {
+	// These are our variables.
 	List<Planet> planets;
-	Planet attractor;
+    // Planet attractor;
 
 	public static void main(String[] args) {
+		// We just need to override everything.
 		PApplet.main(new String[]{Main.class.getName()});
 	}
 
+	// This is where we declare our sizes, perhaps modes, and more.
 	@Override
 	public void settings() {
 		size(700, 600);
 	}
 
+	// We fill up our variables here, if any are made previously.
 	@Override
 	public void setup() {
 //		rectMode(RADIUS);
+		// I'm used to coding in HSB!
 		colorMode(HSB, 360f, 100f, 100f, 100f);
+
+		// This is our arrayList of planets.
 		planets = new ArrayList<>();
+
+		// Now it's time to fill the lists up! The random function calls
+		// are probably derived from Math.random. I have a lot of trouble
+		// understanding all the Math function code.
 		for (int i=0; i<100; i++) {
-			planets.add(new Planet(this, (int) random(width),
-					(int) random(height),
-					(int) random(200)+40));
+			planets.add(new Planet(this, (int) random(200, width - 200),
+					(int) random(200, height - 200),
+					(int) random(200)+4));
 		}
-		attractor = new Planet(this, width/2, height/2, 500);
+
+		// we don't have this huge attractor anymore!
+//		attractor = new Planet(this, width/2, height/2, 500);
 	}
 
 	@Override
 	public void draw() {
 		background(210, 100, 30, 100);
-		PVector gravity = new PVector(0, 0.4f);
 
-		attractor.show(this);
-
+		// We need to make each planet attract each other planet.
+		// This is very costly, but we don't have quad trees so this is all
+		// we can do for now.
 		for (Planet p : planets) {
-			p.show(this);
-			p.update(this);
-			p.applyForce(this, gravity);
-			p.applyForce(this, attractor.attract(this, p));
+			for (Planet otherP : planets) {
+				if (p != otherP) {
+					PVector forceOfAttraction = p.attract(this, otherP);
+					otherP.applyForce(this, forceOfAttraction);
+				}
+			}
 		}
+
+		// we need to update each planet separately from the main loop
+		// so that no planet sees into the future by accident.
+		for (Planet p : planets)
+			p.update(this);
+
+		// Now that we're done with the other loop, we can see the planets.
+		for (Planet p : planets)
+			p.show(this);
 	}
 
 	@Override
 	public void mousePressed() {
-		System.out.println(mouseX);
+		// We make a new planet where our mouse is.
+		// TODO: Maybe print framerate?
+		planets.add(new Planet(this, mouseX, mouseY, (int) random(200)+4));
 	}
 }

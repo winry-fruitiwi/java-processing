@@ -12,7 +12,7 @@ public class Planet {
 
 	public Planet(PApplet app, int x, int y, int mass) {
 		pos = new PVector(x, y);
-		vel = PVector.random2D().mult(2);
+		vel = new PVector(0, 0);
 		acc = new PVector(0, 0);
 		this.mass = mass;
 		this.r = (float) Math.sqrt(this.mass);
@@ -44,9 +44,8 @@ public class Planet {
 		float distance = PVector.dist(this.pos, other.pos);
 		if (distance == 0) {
 			// then other is either ourselves or exactly on us!
-			System.out.println("0 in attract!");
-			return new PVector(0.001f, 0.001f);
-
+//			System.out.println("0 in attract!");
+			return PVector.random2D().mult(1000f);
 		}
 
 		// Now it's time for the fun part: Newton's Law of Gravitation!
@@ -61,7 +60,7 @@ public class Planet {
 		vectorToUs.setMag(mass_product);
 
 		// We can't make gravity too big!
-		float magnitude = PApplet.constrain(vectorToUs.mag(), 20, 80);
+		float magnitude = PApplet.constrain(vectorToUs.mag(), 5, 15);
 		vectorToUs.setMag(magnitude);
 
 		return vectorToUs;
