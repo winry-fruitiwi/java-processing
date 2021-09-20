@@ -44,9 +44,9 @@ public class Main extends PApplet {
 		// are probably derived from Math.random. I have a lot of trouble
 		// understanding all the Math function code.
 		for (int i=0; i<100; i++) {
-			planets.add(new Planet(this, (int) random(200, width - 200),
-					(int) random(200, height - 200),
-					(int) random(200)+4));
+			planets.add(new Planet(this, (int) random(100, width - 100),
+					(int) random(100, height - 100),
+					(int) random(100)+4));
 		}
 
 		// we don't have this huge attractor anymore!
@@ -61,7 +61,10 @@ public class Main extends PApplet {
 		// This is very costly, but we don't have quad trees so this is all
 		// we can do for now.
 		for (Planet p : planets) {
+			// Attract every other planet!
 			for (Planet otherP : planets) {
+				// We don't want to attract ourselves, or else we'd be
+				// making huge forces!
 				if (p != otherP) {
 					PVector forceOfAttraction = p.attract(this, otherP);
 					otherP.applyForce(this, forceOfAttraction);

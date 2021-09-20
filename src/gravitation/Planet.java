@@ -38,8 +38,40 @@ public class Planet {
 	}
 
 
-	// attracts other to this.pos using Newton's Universal Law of Gravitation
 	public PVector attract(PApplet app, Planet other) {
+		// First we find the distance between us and the other planet.
+		float distance = PVector.dist(this.pos, other.pos);
+		// Uh oh! What if we're the same as or right on top of the other planet?
+//		if (distance == 0) {
+//			return new PVector(0, 1000f); No need for this anymore!
+//		}
+
+		// We constrain the distance such that if it ever becomes too large
+		// or small, we treat it as if it were within the boundaries of the
+		// .constrain function.
+		distance = PApplet.constrain(distance, 10, 30);
+
+
+		// We need a vector from the other planet to us. This is what we'll
+		// be working with, like an empty body about to be stuffed.
+		PVector vectorToUs = PVector.sub(this.pos, other.pos);
+
+		// Now for the fun part: Newton's Universal Law of Gravitation! It is:
+		// G*(m₁*m₂)/(r^2)
+
+		// First we need the gravitational constant.
+		float G = 1;
+
+		// Let's use the Law of Gravitation, which I'll abbreviate as Nulog.
+		float attraction = G * (this.mass * other.mass)/(distance * distance);
+		vectorToUs.setMag(attraction);
+
+		return vectorToUs;
+	}
+
+
+	// attracts other to this.pos using Newton's Universal Law of Gravitation
+	public PVector archived_attract(PApplet app, Planet other) {
 		// We want a distance between the two, as required by Newton's Law
 		float distance = PVector.dist(this.pos, other.pos);
 		if (distance == 0) {
