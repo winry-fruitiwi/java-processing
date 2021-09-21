@@ -19,9 +19,13 @@ public class Planet {
 	}
 
 	public void show(PApplet app) {
+		app.pushMatrix();
 		app.fill(0, 0, 100, 40);
+		app.translate(this.pos.x, this.pos.y);
+
 		app.noStroke();
-		app.circle(pos.x, pos.y, this.r*2);
+		app.sphere(this.r*2);
+		app.popMatrix();
 	}
 
 
@@ -62,7 +66,7 @@ public class Planet {
 		// First we need the gravitational constant.
 		float G = 1;
 
-		// Let's use the Law of Gravitation, which I'll abbreviate as Nulog.
+		// Now, let's use the Law of Gravitation!
 		float attraction = G * (this.mass * other.mass)/(distance * distance);
 		vectorToUs.setMag(attraction);
 

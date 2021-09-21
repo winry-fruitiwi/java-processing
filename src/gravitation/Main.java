@@ -41,7 +41,7 @@ public class Main extends PApplet {
 
 		// This is our arrayList of planets.
 		planets = new ArrayList<>();
-		cam = new PeasyCam(this, 0, width, height, 50);
+		cam = new PeasyCam(this, width/2, height/2, 0, 800);
 
 		// Now it's time to fill the lists up! The random function calls
 		// are probably derived from Math.random. I have a lot of trouble
@@ -89,6 +89,6 @@ public class Main extends PApplet {
 	public void mousePressed() {
 		// We make a new planet where our mouse is.
 		// TODO: Maybe print framerate?
-		planets.add(new Planet(this, mouseX, mouseY, (int) random(200)+4));
+//		planets.add(new Planet(this, mouseX, mouseY, (int) random(200)+4));
 	}
 }
