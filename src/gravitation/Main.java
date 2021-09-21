@@ -1,5 +1,6 @@
 package gravitation;
 
+import peasy.*;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class Main extends PApplet {
 	// These are our variables.
 	List<Planet> planets;
+	PeasyCam cam;
     // Planet attractor;
 
 	public static void main(String[] args) {
@@ -27,7 +29,7 @@ public class Main extends PApplet {
 	// This is where we declare our sizes, perhaps modes, and more.
 	@Override
 	public void settings() {
-		size(700, 600);
+		size(700, 600, P3D);
 	}
 
 	// We fill up our variables here, if any are made previously.
@@ -39,6 +41,7 @@ public class Main extends PApplet {
 
 		// This is our arrayList of planets.
 		planets = new ArrayList<>();
+		cam = new PeasyCam(this, 0, width, height, 50);
 
 		// Now it's time to fill the lists up! The random function calls
 		// are probably derived from Math.random. I have a lot of trouble
