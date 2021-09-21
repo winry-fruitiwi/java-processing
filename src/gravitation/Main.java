@@ -26,6 +26,21 @@ public class Main extends PApplet {
 		PApplet.main(new String[]{Main.class.getName()});
 	}
 
+	public void drawAxes() {
+		// x-axis
+		stroke(0, 80, 60);
+		line(-4000, 0, 4000, 0);
+
+		// y-axis
+		stroke(80, 80, 60);
+		line(0, -4000, 0, 4000);
+
+		// z-axis
+		stroke(220, 80, 60);
+		line(0, 0, -4000, 0, 0, 4000);
+
+	}
+
 	// This is where we declare our sizes, perhaps modes, and more.
 	@Override
 	public void settings() {
@@ -41,14 +56,14 @@ public class Main extends PApplet {
 
 		// This is our arrayList of planets.
 		planets = new ArrayList<>();
-		cam = new PeasyCam(this, width/2, height/2, 0, 800);
+		cam = new PeasyCam(this, 0, 0, 0, 800);
 
 		// Now it's time to fill the lists up! The random function calls
 		// are probably derived from Math.random. I have a lot of trouble
 		// understanding all the Math function code.
 		for (int i=0; i<100; i++) {
-			planets.add(new Planet(this, (int) random(100, width - 100),
-					(int) random(100, height - 100),
+			planets.add(new Planet(this, (int) random(-width/3f, width/3f),
+					(int) random(-height/3f, height/3f),
 					(int) random(100)+4));
 		}
 
@@ -59,6 +74,7 @@ public class Main extends PApplet {
 	@Override
 	public void draw() {
 		background(210, 100, 30, 100);
+		this.drawAxes();
 
 		// We need to make each planet attract each other planet.
 		// This is very costly, but we don't have quad trees so this is all

@@ -20,7 +20,7 @@ public class Planet {
 
 	public void show(PApplet app) {
 		app.pushMatrix();
-		app.fill(0, 0, 100, 40);
+		app.fill(0, 0, 80, 80);
 		app.translate(this.pos.x, this.pos.y);
 
 		app.noStroke();
