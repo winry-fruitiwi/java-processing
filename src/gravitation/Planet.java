@@ -10,10 +10,10 @@ public class Planet {
 	int mass;
 	float r;
 
-	public Planet(PApplet app, int x, int y, int mass) {
-		pos = new PVector(x, y);
-		vel = new PVector(0, 0);
-		acc = new PVector(0, 0);
+	public Planet(PApplet app, float x, float y, float z, int mass) {
+		pos = new PVector(x, y, z);
+		vel = new PVector(0, 0, 0);
+		acc = new PVector(0, 0, 0);
 		this.mass = mass;
 		this.r = (float) Math.sqrt(this.mass);
 	}
@@ -21,7 +21,7 @@ public class Planet {
 	public void show(PApplet app) {
 		app.pushMatrix();
 		app.fill(0, 0, 80, 80);
-		app.translate(this.pos.x, this.pos.y);
+		app.translate(this.pos.x, this.pos.y, this.pos.z);
 
 		app.noStroke();
 		app.sphere(this.r*2);

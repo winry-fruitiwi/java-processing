@@ -28,16 +28,22 @@ public class Main extends PApplet {
 
 	public void drawAxes() {
 		// x-axis
-		stroke(0, 80, 60);
-		line(-4000, 0, 4000, 0);
+		stroke(0, 100, 90);
+		line(0, 0, 4000, 0);
+		stroke(0, 80, 50, 40);
+		line(-4000, 0, 0, 0);
 
 		// y-axis
-		stroke(80, 80, 60);
-		line(0, -4000, 0, 4000);
+		stroke(80, 100, 90);
+		line(0, 0, 0, -4000);
+		stroke(80, 80, 50, 40);
+		line(0, 4000, 0, 0);
 
 		// z-axis
-		stroke(220, 80, 60);
-		line(0, 0, -4000, 0, 0, 4000);
+		stroke(220, 100, 90);
+		line(0, 0, 0, 0, 0, 4000);
+		stroke(220, 80, 50, 40);
+		line(0, 0, -4000, 0, 0, 0);
 
 	}
 
@@ -62,8 +68,9 @@ public class Main extends PApplet {
 		// are probably derived from Math.random. I have a lot of trouble
 		// understanding all the Math function code.
 		for (int i=0; i<100; i++) {
-			planets.add(new Planet(this, (int) random(-width/3f, width/3f),
-					(int) random(-height/3f, height/3f),
+			planets.add(new Planet(this, random(-width/3f, width/3f),
+					random(-height/3f, height/3f),
+					random(-200, 200),
 					(int) random(100)+4));
 		}
 
