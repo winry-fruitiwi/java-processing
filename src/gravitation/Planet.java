@@ -3,12 +3,16 @@ package gravitation;
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.ArrayList;
+
 public class Planet {
 	PVector pos;
 	PVector vel;
 	PVector acc;
 	int mass;
 	float r;
+	ArrayList<PVector> trail;
+	int trailSize;
 
 	public Planet(PApplet app, float x, float y, float z, int mass) {
 		pos = new PVector(x, y, z);
@@ -16,20 +20,46 @@ public class Planet {
 		acc = new PVector(0, 0, 0);
 		this.mass = mass;
 		this.r = (float) Math.sqrt(this.mass);
+		// Keeps track of past positions in a certain amount of time
+		this.trail = new ArrayList<PVector>();
+		// How long should this trail be, anyway?
+		this.trailSize = 300;
 	}
 
 	public void show(PApplet app) {
 		app.pushMatrix();
-		app.fill(0, 0, 80, 80);
+		app.fill(0, 0, 500, 100);
 		app.translate(this.pos.x, this.pos.y, this.pos.z);
 
 		app.noStroke();
 		app.sphere(this.r*2);
 		app.popMatrix();
+
+		// Now we draw the trails and fill with a brightness depending on
+		// where the trail is in the list.
+//		for (int i = 0; i < this.trail.size(); i++) {
+//			app.pushMatrix();
+//			PVector trailSegment = this.trail.get(i);
+//			app.translate(trailSegment.x, trailSegment.y, trailSegment.z);
+//			float brightness = PApplet.map(i, 0, this.trail.size(), 50, 30);
+//
+//			app.fill(210, 100, brightness, 100);
+//
+//			app.sphere(this.r*2);
+//
+//			app.popMatrix();
+//		}
 	}
 
 
 	public void update(PApplet app) {
+
+		this.trail.add(0, this.pos.copy());
+		if (this.trail.size() > this.trailSize) {
+			this.trail.remove(this.trailSize);
+		}
+
+
 		pos.add(vel);
 		vel.add(acc);
 		acc.mult(0);

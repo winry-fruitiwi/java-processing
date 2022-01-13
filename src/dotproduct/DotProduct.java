@@ -1,14 +1,15 @@
-package example;
+package dotproduct;
 
 import processing.core.PApplet;
 
 /**
- * Thanks to our hero Abe Pazos at https://vimeo.com/channels/p5idea, who
- * teaches us how to use Processing inside IDEA
+ * ☒ import template project
+ *
+ *
  */
-public class Main extends PApplet {
+public class DotProduct extends PApplet {
 	public static void main(String[] args) {
-		PApplet.main(new String[]{Main.class.getName()});
+		PApplet.main(new String[]{DotProduct.class.getName()});
 	}
 
 	@Override
@@ -21,9 +22,9 @@ public class Main extends PApplet {
 		rectMode(RADIUS);
 		colorMode(HSB, 360f, 100f, 100f, 100f);
 
-		for (int i=0; i<8; i++) {
+		for (int i = 0; i < 8; i++) {
 			System.out.printf("    RAM8(in=in, address=address[3..5], " +
-							"load=, "+
+							"load=, " +
 							"out=out%d);%n",
 					i);
 		}

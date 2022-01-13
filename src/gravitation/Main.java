@@ -51,6 +51,7 @@ public class Main extends PApplet {
 	@Override
 	public void settings() {
 		size(700, 600, P3D);
+
 	}
 
 	// We fill up our variables here, if any are made previously.
@@ -59,19 +60,20 @@ public class Main extends PApplet {
 //		rectMode(RADIUS);
 		// I'm used to coding in HSB!
 		colorMode(HSB, 360f, 100f, 100f, 100f);
-
+		sphereDetail(10);
 		// This is our arrayList of planets.
 		planets = new ArrayList<>();
 		cam = new PeasyCam(this, 0, 0, 0, 800);
+		// Light it up!
 
 		// Now it's time to fill the lists up! The random function calls
 		// are probably derived from Math.random. I have a lot of trouble
 		// understanding all the Math function code.
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<3; i++) {
 			planets.add(new Planet(this, random(-width/3f, width/3f),
 					random(-height/3f, height/3f),
 					random(-200, 200),
-					(int) random(100)+4));
+					(int) random(500)+4));
 		}
 
 		// we don't have this huge attractor anymore!
@@ -82,6 +84,15 @@ public class Main extends PApplet {
 	public void draw() {
 		background(210, 100, 30, 100);
 		this.drawAxes();
+
+//		lights();
+		ambientLight(255, 100, 30, 100000, 0, 0);
+//		directionalLight(90, 40, 100, 0, 0, -1);
+//		directionalLight(90, 40, 100, 0, 0, 1);
+//		pointLight(255, 100, 100, 0, 1000, 0);
+		pointLight(255, 100, 100, 0, -1000, 0);
+
+
 
 		// We need to make each planet attract each other planet.
 		// This is very costly, but we don't have quad trees so this is all
@@ -102,10 +113,12 @@ public class Main extends PApplet {
 		// so that no planet sees into the future by accident.
 		for (Planet p : planets)
 			p.update(this);
+//			continue;
 
 		// Now that we're done with the other loop, we can see the planets.
 		for (Planet p : planets)
 			p.show(this);
+
 	}
 
 	@Override
