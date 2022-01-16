@@ -12,8 +12,8 @@ public class Vehicle {
 	float maxSpeed;
 	float maxForce;
 
-	// PApplets and other rendering tools
-	PApplet app;
+	// PApplets and other rendering tools (didn't actually need this)
+    // PApplet app;
 
 	public Vehicle(float x, float y) {
 		this.pos = new PVector(x, y);
@@ -23,7 +23,7 @@ public class Vehicle {
 		this.maxSpeed = 2;
 		this.maxForce = 0.03f;
 
-		this.app = new PApplet();
+		// this.app = new PApplet();
 	}
 
 	// one of Craig Reynold's steering behaviors, described in his paper.
@@ -35,23 +35,60 @@ public class Vehicle {
 	// applies a force to the vehicle
 	public void applyForce(PVector force) {
 		// just add the force!
+		this.acc.add(force);
 	}
 
 	// updates the vehicle's position, velocity, and acceleration.
 	public void update() {
 		// add vel to pos, add acc to vel, set acc to zero
+		this.pos.add(this.vel);
+		this.vel.add(this.acc).limit(this.maxSpeed);
+		this.acc.mult(0);
 	}
 
 	// renders the vehicle
-	public void show() {
-		// draw a triangle
+	public void show(PApplet app) {
+		app.noStroke();
+		app.fill(0, 0, 100);
+
+		app.push();
+		app.translate(this.pos.x, this.pos.y);
+		app.rotate(this.vel.heading());
+
+		app.triangle(
+				-this.r/2, this.r/2,
+				this.r, 0,
+				-this.r/2, -this.r/2
+		);
+
+		app.pop();
 	}
 
-	public void edges() {
+	public void edges(PApplet app) {
 		// if the vehicle is out of bounds, wrap it around like it's on a globe!
+
+		// right side
+		if (this.pos.x > app.width) {
+			this.pos.x = 0;
+		}
+
+		// left side
+		if (this.pos.x < 0) {
+			this.pos.x = app.width;
+		}
+
+		// top side
+		if (this.pos.y > app.height) {
+			this.pos.y = 0;
+		}
+
+		// bottom side
+		if (this.pos.y < 0) {
+			this.pos.y = app.height;
+		}
 	}
 
-	public PVector follow() {
+	public PVector follow(PApplet app) {
 		// FIXME add a path class argument, a Path called path
 		return null;
 	}

@@ -1,6 +1,7 @@
 package pathfollowing;
 
 import processing.core.PApplet;
+import processing.core.PVector;
 
 /*
 TODO
@@ -14,6 +15,8 @@ TODO
 */
 
 public class PathFollowing extends PApplet {
+	Vehicle vehicle;
+
 	public static void main(String[] args) {
 		PApplet.main(new String[]{PathFollowing.class.getName()});
 	}
@@ -27,10 +30,22 @@ public class PathFollowing extends PApplet {
 	public void setup() {
 		rectMode(RADIUS);
 		colorMode(HSB, 360f, 100f, 100f, 100f);
+
+		vehicle = new Vehicle(width / 2f, height / 2f);
 	}
 
 	@Override
 	public void draw() {
-		background(210, 100, 30, 100);
+		background(234, 34, 24);
+
+		// render and update the vehicle.
+		vehicle.show(this);
+		vehicle.update();
+		// sophisticated example... pretty sure it's too jerky
+		/* if (frameCount % 30 == 0) {
+		       vehicle.applyForce(PVector.random2D());
+		}
+		*/
+		vehicle.edges(this);
 	}
 }
