@@ -98,9 +98,21 @@ public class Vehicle {
 		return null;
 	}
 
-	public PVector findProjection(PVector pos, PVector a, PVector b) {
+	public PVector findProjection(PVector pos, PVector a, PVector b,
+								  PApplet app) {
 		// finds the scalar projection of a and b, then returns that added to
 		// the pos vector
-		return null;
+		PVector v1 = PVector.sub(a, pos);
+		PVector v2 = PVector.sub(b, pos);
+		v2.normalize();
+		float sp = v1.dot(v2);
+		v2.mult(sp).add(pos);
+		// test material
+		// app.strokeWeight(20);
+		// app.stroke(0, 0, 100);
+
+		// app.point(v1.x, v1.y);
+		// app.point(v2.x, v2.y);
+		return v2;
 	}
 }

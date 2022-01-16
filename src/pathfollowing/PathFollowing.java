@@ -59,5 +59,10 @@ public class PathFollowing extends PApplet {
 
 		// path operations
 		path.show(this);
+
+		PVector pos = new PVector(0, 0);
+		PVector a = new PVector(mouseX, mouseY);
+		PVector b = new PVector(100, 0);
+		vehicle.findProjection(pos, a, b, this);
 	}
 }
