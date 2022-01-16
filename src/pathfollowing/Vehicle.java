@@ -19,17 +19,22 @@ public class Vehicle {
 		this.pos = new PVector(x, y);
 		this.vel = new PVector(0, 0);
 		this.acc = new PVector(0, 0);
-		this.r = 10;
-		this.maxSpeed = 2;
-		this.maxForce = 0.03f;
+		this.r = 20;
+		this.maxSpeed = 10f;
+		this.maxForce = 0.06f;
 
 		// this.app = new PApplet();
 	}
 
 	// one of Craig Reynold's steering behaviors, described in his paper.
 	// The vehicle seeks the target passed in.
-	public PVector seek(PVector target) {
-		return null;
+	public void seek(PVector target) {
+		PVector force = PVector.sub(target, this.pos);
+		force.setMag(this.maxSpeed);
+		force.sub(this.vel);
+		force.limit(this.maxForce);
+
+		this.applyForce(force);
 	}
 
 	// applies a force to the vehicle
